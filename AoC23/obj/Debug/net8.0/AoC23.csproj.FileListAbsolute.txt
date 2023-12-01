@@ -13,3 +13,4 @@ C:\Users\axels\Development\AdventOfCode\AoC23\obj\Debug\net8.0\refint\AoC23.dll
 C:\Users\axels\Development\AdventOfCode\AoC23\obj\Debug\net8.0\AoC23.pdb
 C:\Users\axels\Development\AdventOfCode\AoC23\obj\Debug\net8.0\AoC23.genruntimeconfig.cache
 C:\Users\axels\Development\AdventOfCode\AoC23\obj\Debug\net8.0\ref\AoC23.dll
+C:\Users\axels\Development\AdventOfCode\AoC23\bin\Debug\net8.0\Input\Input_01.txt
