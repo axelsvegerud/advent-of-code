@@ -1,60 +1,59 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace AoC23.Days
+﻿namespace AoC23.Days
 {
     class Day02
     {
         static string inputPath = $"{Environment.CurrentDirectory}\\Input\\Input_02.txt";
+        static int redMax = 12;
+        static int greenMax = 13;
+        static int blueMax = 14;
 
         public static int Part01()
         {
-            int redMax = 12;
-            int greenMax = 13;
-            int blueMax = 14;
-            List<String> input = new List<String>();
+            List<string> input = new List<string>();
 
-            foreach (String line in File.ReadAllLines(inputPath))
+            foreach (string line in File.ReadAllLines(inputPath))
             {
                 input.Add(line);
             }
 
-            List<String> possibleGames = getPossibleGames(input, redMax, greenMax, blueMax);
+            List<string> possibleGames = getPossibleGames(input, redMax, greenMax, blueMax);
             List<int> IDs = getIDs(possibleGames);
 
             return IDs.Sum();
         }
 
-        private static List<String> getPossibleGames(List<String> list, int red, int green, int blue)
+        private static List<string> getPossibleGames(List<string> list, int redLimit, int greenLimit, int blueLimit)
         {
-            List<String> possibleGames = new List<String>();
+            List<string> possibleGames = new List<string>();
             bool possible;
 
-            foreach (String line in list)
+            foreach (string line in list)
             {
                 possible = true;
-                String trimedLine = line.Substring(line.IndexOf(':') + 1);
+                string trimedLine = line.Substring(line.IndexOf(':') + 1);
                 string[] sets = trimedLine.Split(';');
-                foreach (String set in sets)
+                foreach (string set in sets)
                 {
-                    String[] colors = set.Split(",");
-                    foreach (String color in colors)
+                    string[] colors = set.Split(",");
+                    foreach (string color in colors)
                     {
                         if (color.Contains("red"))
                         {
-                            if (int.Parse(string.Concat(color.Where(Char.IsDigit).ToArray())) > red)
+                            if (int.Parse(string.Concat(color.Where(char.IsDigit).ToArray())) > redLimit)
                             {
                                 possible = false;
-                            } 
-                        } else if (color.Contains("green"))
+                            }
+                        }
+                        else if (color.Contains("green"))
                         {
-                            if (int.Parse(string.Concat(color.Where(Char.IsDigit).ToArray())) > green)
+                            if (int.Parse(string.Concat(color.Where(char.IsDigit).ToArray())) > greenLimit)
                             {
                                 possible = false;
                             }
                         }
                         else if (color.Contains("blue"))
                         {
-                            if (int.Parse(string.Concat(color.Where(Char.IsDigit).ToArray())) > blue)
+                            if (int.Parse(string.Concat(color.Where(char.IsDigit).ToArray())) > blueLimit)
                             {
                                 possible = false;
                             }
@@ -71,19 +70,21 @@ namespace AoC23.Days
             return possibleGames;
         }
 
-        private static List<int> getIDs(List<String> list)
+        private static List<int> getIDs(List<string> list)
         {
             List<int> IDs = new List<int>();
 
-            foreach (String line in list)
+            foreach (string line in list)
             {
                 if (line[6].Equals(':'))
                 {
                     IDs.Add(int.Parse(line.Substring(5, 1)));
-                } else if (line[7].Equals(':'))
+                }
+                else if (line[7].Equals(':'))
                 {
                     IDs.Add(int.Parse(line.Substring(5, 2)));
-                } else if (line[8].Equals(':'))
+                }
+                else if (line[8].Equals(':'))
                 {
                     IDs.Add(int.Parse(line.Substring(5, 3)));
                 }
@@ -92,9 +93,81 @@ namespace AoC23.Days
             return IDs;
         }
 
-        public static String Part02()
+        public static int Part02()
         {
-            return "Part 2";
+            List<string> input = new List<string>();
+
+            foreach (string line in File.ReadAllLines(inputPath))
+            {
+                input.Add(line);
+            }
+
+            List<string[]> fewestNbrCubes = getFewestCubes(input);
+            List<int> powerSets = getPower(fewestNbrCubes);
+
+            return powerSets.Sum();
+        }
+
+        private static List<string[]> getFewestCubes(List<string> games)
+        {
+            List<string[]> fewest = new List<string[]>();
+
+            foreach (string line in games)
+            {
+                int red = 0;
+                int green = 0;
+                int blue = 0;
+
+                string trimedLine = line.Substring(line.IndexOf(':'));
+                string[] sets = trimedLine.Split(';');
+                foreach (string set in sets)
+                {
+                    string[] colors = set.Split(',');
+                    foreach (string color in colors)
+                    {
+                        if (color.Contains("red"))
+                        {
+                            int currentRed = int.Parse(string.Concat(color.Where(char.IsDigit).ToArray()));
+                            if (currentRed > red)
+                            {
+                                red = currentRed;
+                            }
+                        }
+                        else if (color.Contains("green"))
+                        {
+                            int currentGreen = int.Parse(string.Concat(color.Where(char.IsDigit).ToArray()));
+                            if (currentGreen > green)
+                            {
+                                green = currentGreen;
+                            }
+                        }
+                        else if (color.Contains("blue"))
+                        {
+                            int currentBlue = int.Parse(string.Concat(color.Where(char.IsDigit).ToArray()));
+                            if (currentBlue > blue)
+                            {
+                                blue = currentBlue;
+                            }
+                        }
+                    }
+                }
+                fewest.Add([$"Red: {red}", $"Green: {green}", $"Blue: {blue}"]);
+            }
+            return fewest;
+        }
+
+        private static List<int> getPower(List<string[]> list)
+        {
+            List<int> power = new List<int>();
+            foreach (string[] s in list)
+            {
+                int redVal = int.Parse(string.Concat(s[0].Where(char.IsDigit).ToArray()));
+                int greenVal = int.Parse(string.Concat(s[1].Where(char.IsDigit).ToArray()));
+                int blueVal = int.Parse(string.Concat(s[2].Where(char.IsDigit).ToArray()));
+
+                power.Add(redVal * greenVal * blueVal);
+            }
+            return power;
         }
     }
 }
