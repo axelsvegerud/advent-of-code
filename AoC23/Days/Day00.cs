@@ -2,14 +2,14 @@
 {
     class Day00
     {
-        public static String Part01()
+        public static int Part01()
         {
-            return "Part 1";
+            return 0;
         }
 
-        public static String Part02()
+        public static int Part02()
         {
-            return "Part 2";
+            return 0;
         }
     }
 }
