@@ -6,8 +6,8 @@ namespace AoC23
     {
         static void Main()
         {
-            Console.WriteLine(Day03.Part01());
-            Console.WriteLine(Day03.Part02());
+            Console.WriteLine(Day04.Part01());
+            Console.WriteLine(Day04.Part02());
         }
     }
 }
