@@ -2,21 +2,35 @@ def solve_part1(data):
     number_of_safe_reports = 0
     
     for line in data.splitlines():
-        safe_report = True
-        nums = list(map(int, line.split()))
-        if all(x < y for x, y in zip(nums, nums[1:])) or all(x > y for x, y in zip(nums, nums[1:])):
-            for i in range(len(nums) - 1):
-                if abs(nums[i] - nums[i + 1]) > 3:
-                    safe_report = False
-                    break
-            if safe_report:
-                number_of_safe_reports += 1
+        numbers = get_numbers(line)
+        if is_decreasing_or_increasing(numbers) and is_adjacent_levels_safe(numbers): number_of_safe_reports += 1
                 
     return number_of_safe_reports
 
 def solve_part2(data):
-    # Implement solution for part 2
-    pass
+    number_of_safe_reports = 0
+    
+    for line in data.splitlines():
+        numbers = get_numbers(line)
+        if is_decreasing_or_increasing(numbers) and is_adjacent_levels_safe(numbers):
+            number_of_safe_reports += 1
+        else:
+            for i in range(len(numbers)):
+                temp_numbers = numbers[:i] + numbers[i + 1:]
+                if is_decreasing_or_increasing(temp_numbers) and is_adjacent_levels_safe(temp_numbers):
+                    number_of_safe_reports += 1
+                    break
+                    
+    return number_of_safe_reports
+
+def get_numbers(data):
+    return list(map(int, data.split()))
+
+def is_decreasing_or_increasing(numbers):
+    return all(numbers[i] < numbers[i + 1] for i in range(len(numbers) - 1)) or all(numbers[i] > numbers[i + 1] for i in range(len(numbers) - 1))
+
+def is_adjacent_levels_safe(numbers):
+    return all(abs(numbers[i] - numbers[i + 1]) <= 3 for i in range(len(numbers) - 1))
 
 if __name__ == "__main__":
     with open("../Inputs/day02.txt") as f:
