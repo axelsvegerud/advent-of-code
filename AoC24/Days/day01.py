@@ -1,5 +1,22 @@
 def solve_part1(data):
     total_distance = 0;
+    left, right = split_data(data)
+    
+    while left and right:
+        total_distance += abs(left.pop(left.index(min(left))) - right.pop(right.index(min(right))))
+        
+    return total_distance
+
+def solve_part2(data):
+    similarity_score = 0;
+    left, right = split_data(data)
+    
+    for val in left:
+        similarity_score += val * right.count(val)
+    
+    return similarity_score
+
+def split_data(data):
     left = [];
     right = [];
     
@@ -7,15 +24,7 @@ def solve_part1(data):
         x, y = map(int, line.split())
         left.append(x)
         right.append(y)
-    
-    for val in range(len(left)):
-        total_distance += abs(left.pop(left.index(min(left))) - right.pop(right.index(min(right))))
-        
-    return total_distance
-
-def solve_part2(data):
-    # Implement solution for part 2
-    pass
+    return left, right
 
 if __name__ == "__main__":
     with open("../Inputs/day01.txt") as f:
