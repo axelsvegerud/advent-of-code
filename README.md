@@ -1,5 +1,8 @@
 <h1 align="center">🎅🏻🎄 Advent of Code 🎄🎅🏻</h1>
 
+<p align="center">
+  <img src="Assets/aoc-banner.jpeg" alt="Advent of Code Banner" width="700">
+</p>
 <p align="center"> Repo for my solutions to <a href="https://adventofcode.com/"><em>Advent of Code</em></a> 🎅🏻</p>
 
 <div align="center">
@@ -7,7 +10,7 @@
 | Day | 2023 (C#) | 2024 (Python) |
 |:---:|:---------:|:-------------:|
 | Day 1  | 🎅🏻🎅🏻 | 🎅🏻🎅🏻 |
-| Day 2  | 🎅🏻🎅🏻 |        |
+| Day 2  | 🎅🏻🎅🏻 | 🎅🏻🎅🏻 |
 | Day 3  | 🎅🏻🎅🏻 |        |
 | Day 4  | 🎅🏻    |        |
 | Day 5  |        |        |
