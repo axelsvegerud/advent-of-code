@@ -19,7 +19,7 @@ def fetch_input(day):
     return response.text.strip()
 
 def get_input(day):
-    input_path = f"Inputs/day{day:02}.txt"
+    input_path = f"Inputs/Eday{day:02}.txt"
     if os.path.exists(input_path):
         with open(input_path) as f:
             return f.read()
