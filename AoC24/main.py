@@ -1,13 +1,13 @@
 import os
 import sys
-from Days import day06
+from Days import day07
 from utils.helpers import get_input
 
 def main(day):
     print(f"Day {day} Solutions:")
     data = get_input(day)
-    print("Part 1:", day06.solve_part1(data))
-    print("Part 2:", day06.solve_part2(data))
+    print("Part 1:", day07.solve_part1(data))
+    print("Part 2:", day07.solve_part2(data))
 
 if __name__ == "__main__":
     if len(sys.argv) != 2:
