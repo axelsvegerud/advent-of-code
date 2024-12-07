@@ -13,23 +13,35 @@ def solve_part1(data):
     return calibration_result
 
 def solve_part2(data):
-    # Implement solution for part 2
-    pass
+    calibration_equations = data.splitlines()
+    calibration_result = 0
 
-def find_valid_equations(test_value, equation_numbers):
+    for equation in calibration_equations:
+        test_value = int(equation[:equation.index(":")])
+        equation_numbers = equation[equation.index(":") + 2:].split(" ")
+        valid_equations = find_valid_equations(test_value, equation_numbers, include_concat=True)
+
+        if valid_equations:
+            calibration_result += test_value
+
+    return calibration_result
+
+def find_valid_equations(test_value, equation_numbers, include_concat=False):
     valid_equations = []
-    generate_equations(equation_numbers, 1, equation_numbers[0], valid_equations, test_value)
+    generate_equations(equation_numbers, 1, equation_numbers[0], valid_equations, test_value, include_concat)
     return valid_equations
 
-def generate_equations(equation_numbers, index, current_equation, valid_equations, test_value):
+def generate_equations(equation_numbers, index, current_equation, valid_equations, test_value, include_concat):
     operators = ['+', '*']
+    if include_concat: operators.append('||')
+
     if index == len(equation_numbers):
         if evaluate_equation(current_equation) == int(test_value):
             valid_equations.append(current_equation)
         return
 
     for operator in operators:
-        generate_equations(equation_numbers, index + 1, current_equation + ' ' + operator + ' ' + equation_numbers[index], valid_equations, test_value)
+        generate_equations(equation_numbers, index + 1, current_equation + ' ' + operator + ' ' + equation_numbers[index], valid_equations, test_value, include_concat)
 
 def evaluate_equation(equation):
     elements = equation.split()
@@ -42,6 +54,8 @@ def evaluate_equation(equation):
             result += next_number
         elif operator == '*':
             result *= next_number
+        elif operator == '||':
+            result = int(str(result) + str(next_number))
         i += 2
     return result
 
