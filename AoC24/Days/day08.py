@@ -1,3 +1,6 @@
+import sys
+from collections import defaultdict
+
 def solve_part1(data):
     grid = data.splitlines()
     antennas = find_antennas(grid)
@@ -5,8 +8,10 @@ def solve_part1(data):
     return len(antinodes)
 
 def solve_part2(data):
-    # Placeholder for part 2 if there's an additional challenge
-    pass
+    grid = data.splitlines()
+    antennas = find_antennas(grid)
+    antinodes = find_antinodes_part2(grid, antennas)
+    return len(antinodes)
 
 def find_antennas(grid):
     antennas = {}
@@ -35,6 +40,38 @@ def find_antinodes(grid, antennas):
                     antinodes.add(antinode1)
                 if in_bounds(antinode2, grid):
                     antinodes.add(antinode2)
+
+    return antinodes
+
+def find_antinodes_part2(grid, antennas):
+    antinodes = set()
+
+    for positions in antennas.values():
+        n = len(positions)
+        for i in range(n):
+            for j in range(i + 1, n):
+                x1, y1 = positions[i]
+                x2, y2 = positions[j]
+
+                dx, dy = x2 - x1, y2 - y1
+
+                antinode1 = (x1 - dx, y1 - dy)
+                antinode2 = (x2 + dx, y2 + dy)
+
+                if in_bounds(antinode1, grid):
+                    antinodes.add(antinode1)
+                if in_bounds(antinode2, grid):
+                    antinodes.add(antinode2)
+
+                p1 = (x1 + dx, y1 + dy)
+                while in_bounds(p1, grid):
+                    antinodes.add(p1)
+                    p1 = (p1[0] + dx, p1[1] + dy)
+
+                p2 = (x2 - dx, y2 - dy)
+                while in_bounds(p2, grid):
+                    antinodes.add(p2)
+                    p2 = (p2[0] - dx, p2[1] - dy)
 
     return antinodes
 
